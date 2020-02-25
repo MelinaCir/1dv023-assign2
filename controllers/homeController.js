@@ -11,6 +11,7 @@ homeController.index = (req, res) => {
 homeController.indexPost = (req, res) => {
   const viewData = {
     name: req.body.name,
+    password: req.body.password,
     dayName: moment().format('dddd')
   }
 

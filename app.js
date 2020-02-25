@@ -1,10 +1,20 @@
 'use strict'
+
+require('dotenv').config()
+
 const express = require('express')
+const session = require('express-session')
 const logger = require('morgan')
 const hbs = require('express-hbs')
 const path = require('path')
+const mongoose = require('./configs/mongoose.js')
 
 const app = express()
+
+mongoose.connect().catch(error => {
+  console.error(error)
+  process.exit(1)
+})
 
 app.engine('hbs', hbs.express4({
   defaultLayout: path.join(__dirname, 'views', 'layouts', 'default')
