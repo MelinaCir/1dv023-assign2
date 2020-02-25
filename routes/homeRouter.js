@@ -15,6 +15,6 @@ const controller = require('../controllers/homeController')
 router
   .get('/', controller.index)
   .get('/register', controller.register)
-  .post('/', controller.indexPost)
+  .post('/login', controller.loginPost)
 
 module.exports = router

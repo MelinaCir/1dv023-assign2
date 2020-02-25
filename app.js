@@ -56,6 +56,14 @@ if (app.get('env') === 'production') {
 
 app.use(session(sessionOptions))
 
+app.use((req, res, next) => {
+  if (req.session.flash) {
+    res.locals.flash = req.session.flash
+    delete req.session.flash
+  }
+  next()
+})
+
 app.use('/', require('./routes/homeRouter'))
 
 app.use('*', (req, res) => res

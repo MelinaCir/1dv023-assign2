@@ -14,7 +14,7 @@ const bcrypt = require('bcryptjs')
 /**
  * Creates a schema for a new user.
  */
-const newUserSchema = new Schema({
+const userSchema = new Schema({
   username: {
     type: String,
     required: true,
@@ -30,11 +30,22 @@ const newUserSchema = new Schema({
   versionKey: false
 })
 
-newUserSchema.pre('save', async function () {
+userSchema.pre('save', async function () {
   this.password = await bcrypt.hash(this.password, 8)
 })
+
+userSchema.statics.authenticate = async function (username, password) {
+  const user = await this.find(username)
+
+  if (!user || !(await bcrypt.compare(password, user.password))) {
+    throw new Error('Login attempt failed')
+  }
+
+  return user
+}
+
 // Creates a model for a user with the schema
-const User = mongoose.model('User', newUserSchema)
+const User = mongoose.model('User', userSchema)
 
 // Exports model
 module.exports = User
