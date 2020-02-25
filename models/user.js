@@ -9,6 +9,7 @@
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const bcrypt = require('bcryptjs')
 
 /**
  * Creates a schema for a new user.
@@ -29,6 +30,9 @@ const newUserSchema = new Schema({
   versionKey: false
 })
 
+newUserSchema.pre('save', async function () {
+  this.password = await bcrypt.hash(this.password, 8)
+})
 // Creates a model for a user with the schema
 const User = mongoose.model('User', newUserSchema)
 

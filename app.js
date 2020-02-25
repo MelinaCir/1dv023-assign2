@@ -10,7 +10,7 @@
 require('dotenv').config()
 
 const express = require('express')
-// const session = require('express-session')
+const session = require('express-session')
 const logger = require('morgan')
 const hbs = require('express-hbs')
 const path = require('path')
@@ -24,15 +24,37 @@ mongoose.connect().catch(error => {
 })
 
 app.engine('hbs', hbs.express4({
-  defaultLayout: path.join(__dirname, 'views', 'layouts', 'default')
+  defaultLayout: path.join(__dirname, 'views', 'layouts', 'default'),
+  partialsDir: path.join(__dirname, 'views', 'partials')
 }))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'views'))
 
-// here is other stuff
+// Request logger
 app.use(logger('dev'))
-app.use(express.urlencoded({ extended: false }))
+
+app.use(express.urlencoded({ extended: false })) // true?
 app.use(express.static(path.join(__dirname, 'public')))
+
+// Setup session
+const sessionOptions = {
+  name: 'Hejsan',
+  secret: 'Change this',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24,
+    sameSite: 'huh'
+  }
+}
+
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1)
+  sessionOptions.cookie.secure = true
+}
+
+app.use(session(sessionOptions))
 
 app.use('/', require('./routes/homeRouter'))
 

@@ -1,0 +1,11 @@
+<p>Welcome! Please enter your username and password to register an account</p>
+
+<form method="POST" action="/">
+    <input type="text" name="name" placeholder="Username" />
+    <input type="password" name="password" placeholder="Password" />
+    <input type="submit" value="Register" />
+</form>
+
+{{#if viewData}}
+<p>Hello {{viewData.name}}! </p>
+{{/if}}
