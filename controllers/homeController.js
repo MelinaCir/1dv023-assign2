@@ -1,3 +1,10 @@
+/**
+ * Home controller.
+ *
+ * @author Melina Cirverius
+ * @version 1.0.0
+ */
+
 'use strict'
 
 const moment = require('moment')

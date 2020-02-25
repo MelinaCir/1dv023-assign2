@@ -1,3 +1,10 @@
+/**
+ * Mongoose model User.
+ *
+ * @author Melina Cirverius
+ * @version 1.0.0
+ */
+
 'use strict'
 
 const mongoose = require('mongoose')

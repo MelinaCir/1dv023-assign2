@@ -1,9 +1,16 @@
+/**
+ * The starting point of the application.
+ *
+ * @author Melina Cirverius
+ * @version 1.0.0
+ */
+
 'use strict'
 
 require('dotenv').config()
 
 const express = require('express')
-const session = require('express-session')
+// const session = require('express-session')
 const logger = require('morgan')
 const hbs = require('express-hbs')
 const path = require('path')
