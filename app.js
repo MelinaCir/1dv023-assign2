@@ -14,6 +14,7 @@ const session = require('express-session')
 const logger = require('morgan')
 const hbs = require('express-hbs')
 const path = require('path')
+
 const mongoose = require('./configs/mongoose.js')
 
 const app = express()
@@ -33,7 +34,7 @@ app.set('views', path.join(__dirname, 'views'))
 // Request logger
 app.use(logger('dev'))
 
-app.use(express.urlencoded({ extended: false })) // true?
+app.use(express.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
 
 // Setup session
@@ -45,7 +46,7 @@ const sessionOptions = {
   cookie: {
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24,
-    sameSite: 'huh'
+    sameSite: 'lax'
   }
 }
 
@@ -56,6 +57,7 @@ if (app.get('env') === 'production') {
 
 app.use(session(sessionOptions))
 
+// Middleware
 app.use((req, res, next) => {
   if (req.session.flash) {
     res.locals.flash = req.session.flash
@@ -64,7 +66,9 @@ app.use((req, res, next) => {
   next()
 })
 
+// Routes
 app.use('/', require('./routes/homeRouter'))
+app.use('/user', require('./routes/userRouter'))
 
 app.use('*', (req, res) => res
   .status(404)
