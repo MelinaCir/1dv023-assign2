@@ -1,8 +1,9 @@
 <p>Welcome! Please enter your username and password to register an account</p>
 
-<form method="POST" action="/">
-    <input type="text" name="name" placeholder="Username" />
-    <input type="password" name="password" placeholder="Password" />
+<form method="POST" action="/create">
+    {{>validation}}
+    <input type="text" name="username" placeholder="Username" /><br><br>
+    <input type="password" name="password" placeholder="Password" /><p>Your password needs to be at least 10 characters long.</p>
     <input type="submit" value="Register" />
 </form>
 

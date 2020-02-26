@@ -7,13 +7,17 @@
 
 'use strict'
 
-// const moment = require('moment')
+const moment = require('moment')
 const User = require('../models/User')
 
 const homeController = {}
 
 homeController.index = (req, res) => {
   res.render('home/index')
+}
+
+homeController.login = (req, res) => {
+  res.render('home/login')
 }
 
 homeController.loginPost = async (req, res) => {
@@ -24,16 +28,22 @@ homeController.loginPost = async (req, res) => {
         console.log('There was an error', error)
       }
     })
-    console.log('Hello', user)
+    const viewData = {
+      name: req.body.name,
+      password: req.body.password,
+      dayName: moment().format('dddd')
+    }
+    res.render('home/login', { viewData })
+    console.log('hello', user)
   } catch (error) {
     console.log('There was an error in the catch block', error)
   }
 }
-// TODO: render login page
 
 homeController.register = async (req, res) => {
   const viewData = {
-    value: undefined
+    username: req.body.username,
+    password: req.body.password
   }
   res.render('home/register', viewData)
 }
@@ -41,7 +51,8 @@ homeController.register = async (req, res) => {
 homeController.create = async (req, res) => {
   try {
     const user = new User({
-      value: req.body.name
+      username: req.body.username,
+      password: req.body.password
     })
 
     await user.save()
