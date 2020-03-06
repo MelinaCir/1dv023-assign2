@@ -6,3 +6,18 @@ body {
   color: black;
   background-color: cadetblue;
 }
+
+#alert {
+  width: 600px;
+  padding: 10px;
+  margin: 5px;
+  text-align: center;
+}
+
+.alert-success {
+  background-color: rgb(184, 223, 125);
+}
+
+.alert-fail {
+  background-color: rgb(227, 111, 111);
+}

@@ -1,11 +1,7 @@
-<p>Welcome! Please enter your username and password to login</p>
+<p>Please enter your username and password to login:</p>
 
 <form method="POST" action="/user/login">
     <input type="text" name="username" placeholder="Username" />
     <input type="password" name="password" placeholder="Password" />
     <input type="submit" value="Send" />
 </form>
-
-{{#if viewData}}
-<p>Hello {{viewData.name}} on this {{viewData.dayName}} </p>
-{{/if}}

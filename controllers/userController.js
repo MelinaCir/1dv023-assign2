@@ -19,18 +19,20 @@ userController.login = (req, res) => {
 userController.loginPost = async (req, res) => {
   try {
     const user = await User.authenticate(req.body.username, req.body.password)
-    console.log('hellohej', user)
-    req.session.regenerate(() => {
-      console.log('Heeeej')
 
-      // const viewData = {
-      //   name: req.body.name,
-      //   dayName: moment().format('dddd')
-      // }
-      res.render('home/index')
+    req.session.regenerate(() => {
+      req.session.flash = {
+        type: 'success',
+        text: 'Welcome back ' + user.username + '!'
+      }
+      res.redirect('../')
     })
   } catch (error) {
-    console.log('There was an error in the catch block', error)
+    req.session.flash = {
+      type: 'fail',
+      text: 'Login attempt failed! Try again.'
+    }
+    res.redirect('./login')
   }
 }
 
@@ -51,7 +53,10 @@ userController.create = async (req, res) => {
     req.session.name = 'NewUserRegistered'
     await user.save()
 
-    req.session.flash = { type: 'success', text: 'The user ' + user.username + ' was successfully registered!' }
+    req.session.flash = {
+      type: 'success',
+      text: 'The user ' + user.username + ' was successfully registered!'
+    }
     res.redirect('../')
   } catch (error) {
     return res.render('user/register', {

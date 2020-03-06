@@ -1,9 +1,7 @@
 {{#if validationErrors }}
-    <div class="alert alert-danger">
-        <ul>
-        {{#each validationErrors}}
-            <li>{{this}}</li>
-        {{/each}}
-        </ul>
+    <div id="alert" class="alert-fail">
+    {{#each validationErrors}}
+        {{this}}
+    {{/each}}
     </div>
 {{/if}}
