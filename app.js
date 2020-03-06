@@ -69,6 +69,7 @@ app.use((req, res, next) => {
 // Routes
 app.use('/', require('./routes/homeRouter'))
 app.use('/user', require('./routes/userRouter'))
+app.use('/code', require('./routes/codeRouter'))
 
 app.use('*', (req, res) => res
   .status(404)
