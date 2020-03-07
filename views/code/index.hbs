@@ -1,0 +1,30 @@
+<h1>Codes</h1>
+
+<a href='code/new'>Create new code snippet</a>
+
+<table>
+  <thead>
+    <tr>
+      <th>Hej</th>
+      <th>Code</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#if viewData.codes.length}}
+    {{#each viewData.codes}}
+    <tr>
+      <td>{{ this.code }}</td>
+      <td>
+        <a href="code/{{this.id}}/edit"><span></span></a>
+      </td>
+    </tr>
+    {{/each}}
+    {{else}}
+    <tr>
+      <td>
+        There are no code snippets available.
+      </td>
+    </tr>
+    {{/if}}
+  </tbody>
+</table>
