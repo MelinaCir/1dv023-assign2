@@ -20,6 +20,7 @@ codeController.create = async (req, res) => {
   try {
     const codeSnippet = new Code({
       code: req.body.code
+      // user: current user? //TODO
     })
     req.session.name = 'NewCodeSnippet'
     await codeSnippet.save()

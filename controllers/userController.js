@@ -19,6 +19,8 @@ userController.login = (req, res) => {
 userController.loginPost = async (req, res) => {
   try {
     const user = await User.authenticate(req.body.username, req.body.password)
+    const loggedIn = req.session
+    loggedIn.username = req.body.username
 
     req.session.regenerate(() => {
       req.session.flash = {
@@ -59,9 +61,9 @@ userController.create = async (req, res) => {
     }
     res.redirect('../')
   } catch (error) {
+    console.log(error)
     return res.render('user/register', {
-      validationErrors: [error.message] || [error.errors.value.message],
-      value: req.body.username
+      validationErrors: 'User already exists! Pick another username.'
     })
   }
 }

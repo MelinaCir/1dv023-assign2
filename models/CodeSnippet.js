@@ -19,6 +19,10 @@ const codeSnippetSchema = new Schema({
     required: true,
     trim: true,
     minlength: 1
+  },
+  user: {
+    type: String,
+    required: true
   }
 }, {
   timestamps: true

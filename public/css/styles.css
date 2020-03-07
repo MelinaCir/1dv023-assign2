@@ -1,3 +1,30 @@
+#headerbar {
+  list-style-type: none;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding: 5px;
+  overflow: hidden;
+  background-color: black;
+}
+
+#pagetitle {
+  font-size: x-large;
+  text-decoration: none;
+  color: black;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 10px 10px;
+  text-decoration: none;
+}
+
 body {
   margin: 20px;
   font-family: Arial, Helvetica, sans-serif;
@@ -20,4 +47,8 @@ body {
 
 .alert-fail {
   background-color: rgb(227, 111, 111);
+}
+
+#info {
+  font-size: small;
 }
