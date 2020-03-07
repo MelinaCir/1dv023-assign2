@@ -30,17 +30,27 @@ const userSchema = new Schema({
   versionKey: false
 })
 
+/**
+ * Encrypts the password with salting and hashing using bcrypt.
+ */
 userSchema.pre('save', async function () {
   this.password = await bcrypt.hash(this.password, 8)
 })
 
+/**
+ * Authenticates if the user exists in database and if password is correct.
+ *
+ * @param {string} username - The username trying to login.
+ * @param {string} password - The plain text password to authenticate.
+ *
+ * @returns {object} Returns the logged in user.
+ */
 userSchema.statics.authenticate = async function (username, password) {
   const user = await this.findOne({ username })
 
   if (!user || !(await bcrypt.compare(password, user.password))) {
     throw new Error('Login attempt failed')
   }
-
   return user
 }
 

@@ -13,12 +13,13 @@
           <a href="/user/register">Register</a>
         </li>
         <li>
-          {{#if loggedIn}}
-          <a href="user/logout">Logout</a>
-          {{else}}
           <a href="/user/login">Login</a>
-          {{/if}}
         </li>
+        {{#if loggedIn}}
+        <li>
+          <a href="user/logout">Logout</a>
+        </li>
+        {{/if}}
       </ul>
     </div>
   </nav>

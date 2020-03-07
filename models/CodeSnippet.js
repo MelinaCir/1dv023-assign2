@@ -28,6 +28,8 @@ const codeSnippetSchema = new Schema({
   timestamps: true
 })
 
+// Creates a model for a new code snippet using the schema.
 const CodeSnippet = mongoose.model('CodeSnippet', codeSnippetSchema)
 
+// Exports module.
 module.exports = CodeSnippet

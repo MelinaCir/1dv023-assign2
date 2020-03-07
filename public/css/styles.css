@@ -1,3 +1,4 @@
+/* Header */
 #headerbar {
   list-style-type: none;
   margin-top: 10px;
@@ -25,6 +26,7 @@ li a {
   text-decoration: none;
 }
 
+/* Body */
 body {
   margin: 20px;
   font-family: Arial, Helvetica, sans-serif;
@@ -34,6 +36,11 @@ body {
   background-color: cadetblue;
 }
 
+#info {
+  font-size: small;
+}
+
+/* Alerts */
 #alert {
   width: 600px;
   padding: 10px;
@@ -47,8 +54,4 @@ body {
 
 .alert-fail {
   background-color: rgb(227, 111, 111);
-}
-
-#info {
-  font-size: small;
 }

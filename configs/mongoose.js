@@ -1,5 +1,5 @@
 /**
- * Mongoose model User.
+ * Mongoose model.
  *
  * @author Melina Cirverius
  * @version 1.0.0

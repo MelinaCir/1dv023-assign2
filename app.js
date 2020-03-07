@@ -16,6 +16,7 @@ const hbs = require('express-hbs')
 const path = require('path')
 
 const mongoose = require('./configs/mongoose.js')
+// const MongoDBstore = require('connect-mongodb-session')
 
 const app = express()
 
@@ -39,10 +40,11 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 // Setup session
 const sessionOptions = {
-  name: 'Hejsan',
+  name: 'YourCodeCookie',
   secret: 'Change this',
   resave: false,
   saveUninitialized: false,
+  // store: new MongoDBstore({ mongooseConnection: mongoose.connection, db: 'sessions' }),
   cookie: {
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24,
