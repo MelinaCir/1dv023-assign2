@@ -76,7 +76,6 @@ userController.create = async (req, res) => {
       username: req.body.username,
       password: req.body.password
     })
-    req.session.name = 'NewUserRegistered'
     await user.save()
 
     req.session.flash = {
@@ -86,6 +85,11 @@ userController.create = async (req, res) => {
     res.redirect('../')
   } catch (error) {
     if (error.code === 11000) {
+      // req.session.flash = {
+      //   type: 'fail',
+      //   text: 'User already exists! Pick another username.'
+      // }
+      // res.redirect('./register')
       return res.render('user/register', {
         validationErrors: ['User already exists! Pick another username.']
       })

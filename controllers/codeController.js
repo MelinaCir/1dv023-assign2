@@ -64,7 +64,7 @@ codeController.create = async (req, res) => {
       type: 'success',
       text: 'The code snippet was successfully created.'
     }
-    res.redirect('../')
+    res.redirect('/code')
   } catch (error) {
     return res.render('code/new', {
       validationErrors: [error.message] || [error.errors.value.message],
@@ -94,7 +94,7 @@ codeController.edit = async (req, res) => {
         type: 'fail',
         text: 'You must be logged in as this user to edit!'
       }
-      res.redirect('../')
+      res.redirect('/code')
     }
   } catch (error) {
     req.session.flash = {
@@ -121,14 +121,14 @@ codeController.update = async (req, res) => {
         type: 'success',
         text: 'The code snippet was updated successfully!'
       }
-      res.redirect('../')
+      res.redirect('/code')
     } else {
       req.session.flash = {
         type: 'fail',
         text: 'The code snippet failed to update'
       }
     }
-    res.redirect('../')
+    res.redirect('/code')
   } catch (error) {
     req.session.flash = {
       type: 'fail',
@@ -159,7 +159,7 @@ codeController.remove = async (req, res) => {
         type: 'fail',
         text: 'You must be logged in as this user to delete snippets!'
       }
-      res.redirect('../')
+      res.redirect('/code')
     }
   } catch (error) {
     req.session.flash = {
@@ -184,7 +184,7 @@ codeController.delete = async (req, res) => {
       type: 'success',
       text: 'Code snippet was deleted.'
     }
-    res.redirect('../')
+    res.redirect('/code')
   } catch (error) {
     req.session.flash = {
       type: 'fail',

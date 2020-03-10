@@ -15,7 +15,7 @@
     {{#if codeData.codes.length }}
     {{#each codeData.codes}}
     <tr>
-      <td>{{ this.code }}</td>
+      <td><pre id="snippet">{{ this.code }}</pre></td>
       <td>{{ this.user }}</td>
       <td>
         <a href="code/{{this.id}}/edit"><span class="edit-btn">Edit</span></a>
