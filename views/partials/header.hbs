@@ -9,15 +9,16 @@
         <li>
           <a href="/code">Codes</a>
         </li>
+        {{#if loggedIn }}
+        <li>
+          <a href="/user/logout">Logout</a>
+        </li>
+        {{else}}
         <li>
           <a href="/user/register">Register</a>
         </li>
         <li>
           <a href="/user/login">Login</a>
-        </li>
-        {{#if loggedIn}}
-        <li>
-          <a href="user/logout">Logout</a>
         </li>
         {{/if}}
       </ul>

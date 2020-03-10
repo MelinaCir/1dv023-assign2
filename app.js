@@ -65,6 +65,9 @@ app.use((req, res, next) => {
     res.locals.flash = req.session.flash
     delete req.session.flash
   }
+  if (req.session.loggedIn) {
+    res.locals.loggedIn = req.session.loggedIn
+  }
   next()
 })
 

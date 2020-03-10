@@ -37,6 +37,7 @@ userController.loginPost = async (req, res) => {
         text: 'Welcome back ' + user.username + '!'
       }
       req.session.name = 'LoggedInUser'
+      req.session.loggedIn = req.body.username
 
       res.redirect('../')
     })
@@ -94,6 +95,20 @@ userController.create = async (req, res) => {
       })
     }
   }
+}
+
+/**
+ * Logs out the currently logged in user.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ */
+userController.logout = async (req, res) => {
+  req.session.flash = {
+    type: 'success',
+    text: 'You are now logged out!'
+  }
+  res.redirect('../')
 }
 
 // Exports module.

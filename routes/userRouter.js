@@ -18,6 +18,7 @@ router
   .post('/create', controller.create)
   .get('/login', controller.login)
   .post('/login', controller.loginPost)
+  .get('/logout', controller.logout)
 
 // Exports module.
 module.exports = router

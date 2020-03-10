@@ -12,13 +12,21 @@ const Code = require('../models/CodeSnippet')
 
 const codeController = {}
 
+/**
+ * Renders the index page that displays all code snippets in db.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @param {Function} next - Express middleware function.
+ */
 codeController.index = async (req, res, next) => {
   try {
     const codeData = {
       codes: (await Code.find({}))
         .map(snippet => ({
           id: snippet._id,
-          code: snippet.code
+          code: snippet.code,
+          user: snippet.user
         }))
     }
 
@@ -47,8 +55,8 @@ codeController.new = (req, res) => {
 codeController.create = async (req, res) => {
   try {
     const codeSnippet = new Code({
-      code: req.body.code
-      // user: req.session.username
+      code: req.body.code,
+      user: req.session.loggedIn
     })
 
     await codeSnippet.save()
@@ -66,10 +74,22 @@ codeController.create = async (req, res) => {
   }
 }
 
+/**
+ * Renders the page for editing a code snippet.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ */
 codeController.edit = async (req, res) => {
-  res.render('/code/new')
+  res.render('code/edit')
 }
 
+/**
+ * Updates a code snippet.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ */
 codeController.update = async (req, res) => {
   try {
     const updated = await Code.updateOne({ _id: req.body.id }, {

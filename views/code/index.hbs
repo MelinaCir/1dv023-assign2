@@ -1,13 +1,14 @@
 <h1>Codes</h1>
-
+{{#if loggedIn }}
 <a href='code/new'>Create new code snippet</a>
+{{/if}}
 
 <table>
   <thead>
     <tr>
       <th>Code</th>
-      <th></th>
       <th>Author</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -15,11 +16,11 @@
     {{#each codeData.codes}}
     <tr>
       <td>{{ this.code }}</td>
+      <td>{{ this.user }}</td>
       <td>
         <a href="code/{{this.id}}/edit"><span class="edit-btn">Edit</span></a>
         <a href="code/{{this.id}}/delete"><span class="edit-btn">Delete</span></a>
       </td>
-      <td>Author</td>
     </tr>
     {{/each}}
     {{else}}
