@@ -58,7 +58,6 @@ codeController.create = async (req, res) => {
       code: req.body.code,
       user: req.session.loggedIn
     })
-
     await codeSnippet.save()
 
     req.session.flash = {
@@ -81,7 +80,21 @@ codeController.create = async (req, res) => {
  * @param {object} res - Express response object.
  */
 codeController.edit = async (req, res) => {
-  res.render('code/edit')
+  try {
+    const snippet = await Code.findOne({ _id: req.params.id })
+    const codeData = {
+      id: snippet._id,
+      code: snippet.code,
+      author: snippet.user
+    }
+    res.render('code/edit', { codeData })
+  } catch (error) {
+    req.session.flash = {
+      type: 'fail',
+      text: error.message
+    }
+    res.redirect('..')
+  }
 }
 
 /**
@@ -95,12 +108,26 @@ codeController.update = async (req, res) => {
     const updated = await Code.updateOne({ _id: req.body.id }, {
       code: req.body.code
     })
+    if (updated.nModified === 1) {
+      req.session.flash = {
+        type: 'success',
+        text: 'The code snippet was updated successfully!'
+      }
+    } else {
+      req.session.flash = {
+        type: 'fail',
+        text: 'The code snippet failed to update'
+      }
+    }
+
+    res.redirect('../')
   } catch (error) {
+    console.log('Error in posting')
     req.session.flash = {
       type: 'fail',
       text: error.message
     }
-    res.redirect('./edit')
+    res.redirect('../')
   }
 }
 

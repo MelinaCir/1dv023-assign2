@@ -18,7 +18,7 @@ router
   .get('/new', controller.new)
   .post('/new', controller.create)
   .get('/:id/edit', controller.edit)
-  .get('/:id/update', controller.update)
+  .post('/:id/update', controller.update)
 
 // Exports module.
 module.exports = router

@@ -1,7 +1,8 @@
 <p>Edit code snippet</p>
 
-<form method="POST" action="/code/edit">
-    <textarea name="code" placeholder="Enter your code here" rows="20" cols="80"></textarea>
+<form method="POST" action="/code/{{ codeData.id }}/update">
+    <input type="hidden" name="id" value="{{ codeData.id }}" />
+    <textarea name="code" rows="20" cols="80">{{ codeData.code }}</textarea>
     <br>
     <input type="submit" value="Update Snippet" />
 </form>
