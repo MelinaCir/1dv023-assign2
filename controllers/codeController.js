@@ -14,14 +14,15 @@ const codeController = {}
 
 codeController.index = async (req, res, next) => {
   try {
-    const viewData = {
+    const codeData = {
       codes: (await Code.find({}))
         .map(snippet => ({
           id: snippet._id,
           code: snippet.code
         }))
     }
-    res.render('code/index', viewData)
+
+    res.render('code/index', { codeData })
   } catch (error) {
     next(error)
   }

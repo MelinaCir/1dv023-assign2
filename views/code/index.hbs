@@ -5,18 +5,21 @@
 <table>
   <thead>
     <tr>
-      <th>Hej</th>
       <th>Code</th>
+      <th></th>
+      <th>Author</th>
     </tr>
   </thead>
   <tbody>
-    {{#if viewData.codes.length}}
-    {{#each viewData.codes}}
+    {{#if codeData.codes.length }}
+    {{#each codeData.codes}}
     <tr>
       <td>{{ this.code }}</td>
       <td>
-        <a href="code/{{this.id}}/edit"><span></span></a>
+        <a href="code/{{this.id}}/edit"><span class="edit-btn">Edit</span></a>
+        <a href="code/{{this.id}}/delete"><span class="edit-btn">Delete</span></a>
       </td>
+      <td>Author</td>
     </tr>
     {{/each}}
     {{else}}
