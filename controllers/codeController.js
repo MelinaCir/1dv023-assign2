@@ -82,12 +82,20 @@ codeController.create = async (req, res) => {
 codeController.edit = async (req, res) => {
   try {
     const snippet = await Code.findOne({ _id: req.params.id })
-    const codeData = {
-      id: snippet._id,
-      code: snippet.code,
-      author: snippet.user
+    if (req.session.loggedIn && req.session.loggedIn === snippet.user) {
+      const codeData = {
+        id: snippet._id,
+        code: snippet.code,
+        author: snippet.user
+      }
+      res.render('code/edit', { codeData })
+    } else {
+      req.session.flash = {
+        type: 'fail',
+        text: 'You must be logged in as this user to edit!'
+      }
+      res.redirect('../')
     }
-    res.render('code/edit', { codeData })
   } catch (error) {
     req.session.flash = {
       type: 'fail',
@@ -139,12 +147,20 @@ codeController.update = async (req, res) => {
 codeController.remove = async (req, res) => {
   try {
     const snippet = await Code.findOne({ _id: req.params.id })
-    const codeData = {
-      id: snippet._id,
-      code: snippet.code,
-      author: snippet.user
+    if (req.session.loggedIn && req.session.loggedIn === snippet.user) {
+      const codeData = {
+        id: snippet._id,
+        code: snippet.code,
+        author: snippet.user
+      }
+      res.render('code/delete', { codeData })
+    } else {
+      req.session.flash = {
+        type: 'fail',
+        text: 'You must be logged in as this user to delete snippets!'
+      }
+      res.redirect('../')
     }
-    res.render('code/delete', { codeData })
   } catch (error) {
     req.session.flash = {
       type: 'fail',

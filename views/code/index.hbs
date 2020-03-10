@@ -1,6 +1,6 @@
 <h1>Codes</h1>
 {{#if loggedIn }}
-<a href='code/new'>Create new code snippet</a>
+<a href='code/new'>Create new code snippet </a>
 {{/if}}
 
 <table>
@@ -18,8 +18,8 @@
       <td>{{ this.code }}</td>
       <td>{{ this.user }}</td>
       <td>
-        <a href="{{this.id}}/edit"><span class="edit-btn">Edit</span></a>
-        <a href="{{this.id}}/remove"><span class="edit-btn">Delete</span></a>
+        <a href="code/{{this.id}}/edit"><span class="edit-btn">Edit</span></a>
+        <a href="code/{{this.id}}/remove"><span class="edit-btn">Delete</span></a>
       </td>
     </tr>
     {{/each}}

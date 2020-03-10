@@ -36,7 +36,7 @@ userController.loginPost = async (req, res) => {
         type: 'success',
         text: 'Welcome back ' + user.username + '!'
       }
-      req.session.name = 'LoggedInUser'
+      req.session.name = 'LoggedInUser '
       req.session.loggedIn = req.body.username
 
       res.redirect('../')
@@ -104,11 +104,20 @@ userController.create = async (req, res) => {
  * @param {object} res - Express response object.
  */
 userController.logout = async (req, res) => {
-  req.session.flash = {
-    type: 'success',
-    text: 'You are now logged out!'
+  try {
+    req.session.destroy()
+    // req.session.flash = {
+    //   type: 'success',
+    //   text: 'You are now logged out!'
+    // }
+    res.redirect('../')
+  } catch (error) {
+    req.session.flash = {
+      type: 'fail',
+      text: 'Failed to logout!'
+    }
+    res.redirect('../')
   }
-  res.redirect('../')
 }
 
 // Exports module.

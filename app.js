@@ -14,17 +14,19 @@ const session = require('express-session')
 const logger = require('morgan')
 const hbs = require('express-hbs')
 const path = require('path')
+const httpError = require('http-errors')
 
 const mongoose = require('./configs/mongoose.js')
-// const MongoDBstore = require('connect-mongodb-session')
 
 const app = express()
 
+// Connection the MongoDB
 mongoose.connect().catch(error => {
   console.error(error)
   process.exit(1)
 })
 
+// Set up for the view engine
 app.engine('hbs', hbs.express4({
   defaultLayout: path.join(__dirname, 'views', 'layouts', 'default'),
   partialsDir: path.join(__dirname, 'views', 'partials')
@@ -44,7 +46,6 @@ const sessionOptions = {
   secret: 'Change this',
   resave: false,
   saveUninitialized: false,
-  // store: new MongoDBstore({ mongooseConnection: mongoose.connection, db: 'sessions' }),
   cookie: {
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24,
@@ -75,9 +76,28 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/homeRouter'))
 app.use('/user', require('./routes/userRouter'))
 app.use('/code', require('./routes/codeRouter'))
+app.use('*', (req, res, next) => next(httpError(404)))
 
-app.use('*', (req, res) => res
-  .status(404)
-  .send('404 Not Found'))
+// Routes for error messages
+app.use((err, req, res, next) => {
+  if (err.status === 404) {
+    return res
+      .status(404)
+      .sendFile(path.join(__dirname, 'views', 'errors', '404.html'))
+  }
 
+  if (err.status === 403) {
+    return res
+      .status(403)
+      .sendFile(path.join(__dirname, 'views', 'errors', '403.html'))
+  }
+
+  if (req.app.get('env') !== 'development') {
+    return res
+      .status(500)
+      .sendFile(path.join(__dirname, 'views', 'errors', '500.html'))
+  }
+})
+
+// Start listening for the application on port 8000
 app.listen(8000, () => console.log('Server running on localhost:8000'))
