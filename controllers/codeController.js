@@ -7,7 +7,6 @@
 
 'use strict'
 
-// const moment = require('moment')
 const Code = require('../models/CodeSnippet')
 
 const codeController = {}

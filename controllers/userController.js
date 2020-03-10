@@ -85,11 +85,6 @@ userController.create = async (req, res) => {
     res.redirect('../')
   } catch (error) {
     if (error.code === 11000) {
-      // req.session.flash = {
-      //   type: 'fail',
-      //   text: 'User already exists! Pick another username.'
-      // }
-      // res.redirect('./register')
       return res.render('user/register', {
         validationErrors: ['User already exists! Pick another username.']
       })
@@ -110,10 +105,6 @@ userController.create = async (req, res) => {
 userController.logout = async (req, res) => {
   try {
     req.session.destroy()
-    // req.session.flash = {
-    //   type: 'success',
-    //   text: 'You are now logged out!'
-    // }
     res.redirect('../')
   } catch (error) {
     req.session.flash = {
