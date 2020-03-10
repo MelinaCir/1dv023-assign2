@@ -16,9 +16,6 @@ const homeController = {}
  * @param {object} res - Express response object.
  */
 homeController.index = (req, res) => {
-  if (req.session.loggedIn) {
-    console.log('Name of session:', req.session.name)
-  }
   res.render('home/index')
 }
 

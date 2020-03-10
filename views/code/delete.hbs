@@ -1,0 +1,9 @@
+<p>Delete this code snippet?</p>
+
+<form method="POST" action="/code/{{ codeData.id }}/delete">
+  <button id="delete" type="submit">Yes, delete</button>
+  <br>
+    <input type="hidden" name="id" value="{{ codeData.id }}" />
+    <textarea name="code" rows="20" cols="80" readonly="readonly">{{ codeData.code }}</textarea>
+    <br>
+</form>

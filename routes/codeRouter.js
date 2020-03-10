@@ -19,6 +19,8 @@ router
   .post('/new', controller.create)
   .get('/:id/edit', controller.edit)
   .post('/:id/update', controller.update)
+  .get('/:id/remove', controller.remove)
+  .post('/:id/delete', controller.delete)
 
 // Exports module.
 module.exports = router

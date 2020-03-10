@@ -113,16 +113,63 @@ codeController.update = async (req, res) => {
         type: 'success',
         text: 'The code snippet was updated successfully!'
       }
+      res.redirect('../')
     } else {
       req.session.flash = {
         type: 'fail',
         text: 'The code snippet failed to update'
       }
     }
-
     res.redirect('../')
   } catch (error) {
-    console.log('Error in posting')
+    req.session.flash = {
+      type: 'fail',
+      text: error.message
+    }
+    res.redirect('../')
+  }
+}
+
+/**
+ * Renders the page to delete a code snippet.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ */
+codeController.remove = async (req, res) => {
+  try {
+    const snippet = await Code.findOne({ _id: req.params.id })
+    const codeData = {
+      id: snippet._id,
+      code: snippet.code,
+      author: snippet.user
+    }
+    res.render('code/delete', { codeData })
+  } catch (error) {
+    req.session.flash = {
+      type: 'fail',
+      text: error.message
+    }
+    res.redirect('../')
+  }
+}
+
+/**
+ * Deletes a code snippet.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ */
+codeController.delete = async (req, res) => {
+  try {
+    await Code.deleteOne({ _id: req.body.id })
+
+    req.session.flash = {
+      type: 'success',
+      text: 'Code snippet was deleted.'
+    }
+    res.redirect('../')
+  } catch (error) {
     req.session.flash = {
       type: 'fail',
       text: error.message
