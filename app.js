@@ -1,5 +1,6 @@
 /**
  * The starting point of the application.
+ * (Some code borrowed from Mats Loock: https://github.com/1dv023/syllabus/tree/master/lectures/03/demo).
  *
  * @author Melina Cirverius
  * @version 1.0.0
