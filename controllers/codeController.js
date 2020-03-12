@@ -42,7 +42,11 @@ codeController.index = async (req, res, next) => {
  * @param {object} res - Express response object.
  */
 codeController.new = (req, res) => {
-  res.render('code/new')
+  if (req.session.loggedIn) {
+    res.render('code/new')
+  } else {
+    res.sendStatus(403)
+  }
 }
 
 /**
@@ -52,23 +56,27 @@ codeController.new = (req, res) => {
  * @param {object} res - Express response object.
  */
 codeController.create = async (req, res) => {
-  try {
-    const codeSnippet = new Code({
-      code: req.body.code,
-      user: req.session.loggedIn
-    })
-    await codeSnippet.save()
+  if (req.session.loggedIn) {
+    try {
+      const codeSnippet = new Code({
+        code: req.body.code,
+        user: req.session.loggedIn
+      })
+      await codeSnippet.save()
 
-    req.session.flash = {
-      type: 'success',
-      text: 'The code snippet was successfully created.'
+      req.session.flash = {
+        type: 'success',
+        text: 'The code snippet was successfully created.'
+      }
+      res.redirect('/code')
+    } catch (error) {
+      return res.render('code/new', {
+        validationErrors: [error.message] || [error.errors.value.message],
+        value: req.body.username
+      })
     }
-    res.redirect('/code')
-  } catch (error) {
-    return res.render('code/new', {
-      validationErrors: [error.message] || [error.errors.value.message],
-      value: req.body.username
-    })
+  } else {
+    res.sendStatus(403)
   }
 }
 
@@ -80,8 +88,8 @@ codeController.create = async (req, res) => {
  */
 codeController.edit = async (req, res) => {
   try {
-    const snippet = await Code.findOne({ _id: req.params.id })
-    if (req.session.loggedIn && req.session.loggedIn === snippet.user) {
+    if (req.session.loggedIn && req.session.loggedIn === req.body.user) {
+      const snippet = await Code.findOne({ _id: req.params.id })
       const codeData = {
         id: snippet._id,
         code: snippet.code,
@@ -100,7 +108,7 @@ codeController.edit = async (req, res) => {
       type: 'fail',
       text: error.message
     }
-    res.redirect('..')
+    res.redirect('../')
   }
 }
 
@@ -112,28 +120,32 @@ codeController.edit = async (req, res) => {
  */
 codeController.update = async (req, res) => {
   try {
-    const updated = await Code.updateOne({ _id: req.body.id }, {
-      code: req.body.code
-    })
-    if (updated.nModified === 1) {
-      req.session.flash = {
-        type: 'success',
-        text: 'The code snippet was updated successfully!'
+    if (req.session.loggedIn && req.session.loggedIn === req.body.author) {
+      const updated = await Code.updateOne({ _id: req.body.id }, {
+        code: req.body.code
+      })
+      if (updated.nModified === 1) {
+        req.session.flash = {
+          type: 'success',
+          text: 'The code snippet was updated successfully!'
+        }
+        res.redirect('/code')
+      } else {
+        req.session.flash = {
+          type: 'fail',
+          text: 'The code snippet failed to update'
+        }
       }
-      res.redirect('/code')
+      res.redirect('../')
     } else {
-      req.session.flash = {
-        type: 'fail',
-        text: 'The code snippet failed to update'
-      }
+      res.sendStatus(403)
     }
-    res.redirect('/code')
   } catch (error) {
     req.session.flash = {
       type: 'fail',
       text: error.message
     }
-    res.redirect('../')
+    res.redirect('/')
   }
 }
 
@@ -177,13 +189,17 @@ codeController.remove = async (req, res) => {
  */
 codeController.delete = async (req, res) => {
   try {
-    await Code.deleteOne({ _id: req.body.id })
+    if (req.session.loggedIn && req.session.loggedIn === req.body.author) {
+      await Code.deleteOne({ _id: req.body.id })
 
-    req.session.flash = {
-      type: 'success',
-      text: 'Code snippet was deleted.'
+      req.session.flash = {
+        type: 'success',
+        text: 'Code snippet was deleted.'
+      }
+      res.redirect('/code')
+    } else {
+      res.sendStatus(403)
     }
-    res.redirect('/code')
   } catch (error) {
     req.session.flash = {
       type: 'fail',

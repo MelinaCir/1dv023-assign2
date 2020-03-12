@@ -2,6 +2,7 @@
 
 <form method="POST" action="/code/{{ codeData.id }}/update">
     <input type="hidden" name="id" value="{{ codeData.id }}" />
+    <input type="hidden" name="author" value="{{ codeData.author }}" />
     <textarea name="code" rows="20" cols="80">{{ codeData.code }}</textarea>
     <br>
     <input type="submit" value="Update Snippet" />

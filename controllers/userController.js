@@ -104,8 +104,10 @@ userController.create = async (req, res) => {
  */
 userController.logout = async (req, res) => {
   try {
-    req.session.destroy()
-    res.redirect('../')
+    if (req.session.loggedIn) {
+      req.session.destroy()
+      res.redirect('../')
+    }
   } catch (error) {
     req.session.flash = {
       type: 'fail',
