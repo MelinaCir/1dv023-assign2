@@ -8,9 +8,7 @@
     <tr>
       <th>Code</th>
       <th>Author</th>
-      {{#if loggedIn }}
       <th></th>
-      {{/if}}
     </tr>
   </thead>
   <tbody>
@@ -19,10 +17,12 @@
     <tr>
       <td><pre id="snippet">{{ this.code }}</pre></td>
       <td>{{ this.user }}</td>
+      {{!-- {{#if loggedIn}} --}}
       <td>
         <a href="code/{{this.id}}/edit"><span class="edit-btn">Edit</span></a>
         <a href="code/{{this.id}}/remove"><span class="edit-btn">Delete</span></a>
       </td>
+      {{!-- {{/if}} --}}
     </tr>
     {{/each}}
     {{else}}
